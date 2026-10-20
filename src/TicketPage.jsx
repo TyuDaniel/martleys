@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { LazyMotion, domAnimation, m, MotionConfig, useReducedMotion } from 'motion/react';
+import { Minus, Plus } from 'lucide-react';
 import roadImage from './assets/martleys-road-live.jpg';
-import Icon from './TicketIcon';
+import Icon from './SiteIcon';
 import './tickets.css';
 
 const services = {
@@ -23,7 +24,7 @@ const services = {
     types: ['Daily', 'Weekly', 'Term'],
     helpTitle: 'Their first journey with us?',
     help: 'Register your student before arranging their first school ticket.',
-    helpLink: 'https://martleys.com/schools-colleges/', helpLabel: 'Register a student',
+    helpLink: 'https://martleys.com/student-registration/', helpLabel: 'Register a student',
   },
   events: {
     label: 'Events', icon: 'event',
@@ -77,8 +78,8 @@ function TravelHelp({ service, className = '' }) {
   );
 }
 
-export default function TicketPage() {
-  const requested = new URLSearchParams(window.location.search).get('service');
+export default function TicketPage({ initialService }) {
+  const requested = initialService || new URLSearchParams(window.location.search).get('service');
   const initial = Object.hasOwn(services, requested) ? requested : 'college';
   const [service, setService] = useState(initial);
   const [ticketType, setTicketType] = useState(services[initial].types[0]);
@@ -207,10 +208,10 @@ export default function TicketPage() {
                     <div><strong>Passengers</strong><span>Seats to book</span></div>
                     <div className="ticket-counter">
                       <button type="button" disabled={passengers === 1} aria-label="Remove a passenger"
-                        onClick={() => setPassengers((count) => count - 1)}>−</button>
+                        onClick={() => setPassengers((count) => count - 1)}><Minus size={20} strokeWidth={1.7} aria-hidden="true" /></button>
                       <output aria-live="polite" aria-label="Passenger count">{passengers}</output>
                       <button type="button" disabled={passengers === 8} aria-label="Add a passenger"
-                        onClick={() => setPassengers((count) => count + 1)}>+</button>
+                        onClick={() => setPassengers((count) => count + 1)}><Plus size={20} strokeWidth={1.7} aria-hidden="true" /></button>
                     </div>
                   </div>
 
